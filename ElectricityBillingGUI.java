@@ -27,7 +27,7 @@ class SplashScreen extends JFrame {
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 25, 25));
 
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(128, 128, 0)); // Olive Color
+        panel.setBackground(new Color(11, 143, 47)); // Dark Green Color
         panel.setLayout(new BorderLayout());
         
         JLabel label = new JLabel("Welcome to Electricity Billing System", SwingConstants.CENTER);
@@ -35,9 +35,9 @@ class SplashScreen extends JFrame {
         label.setFont(new Font("Serif", Font.BOLD, 22));
         panel.add(label, BorderLayout.CENTER);
         
-        JLabel credit = new JLabel("-By Montosh Ghosh", SwingConstants.CENTER);
+        JLabel credit = new JLabel("-By Monotosh Ghosh", SwingConstants.CENTER);
         credit.setForeground(Color.WHITE);
-        credit.setFont(new Font("Serif", Font.ITALIC, 14));
+        credit.setFont(new Font("Serif", Font.ITALIC, 16));
         panel.add(credit, BorderLayout.SOUTH);
         
         add(panel);
@@ -147,7 +147,13 @@ public class ElectricityBillingGUI extends JFrame {
     }
 
     private void generateBill() {
-        String meterNumber = searchField.getText();
+        String meterNumber = searchField.getText().trim();
+        
+        if (meterNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter meter number!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
         for (User user : users) {
             if (user.meterNumber.equals(meterNumber)) {
                 double billAmount = user.unitsConsumed * 5.0;
@@ -155,14 +161,26 @@ public class ElectricityBillingGUI extends JFrame {
                 return;
             }
         }
+    
         JOptionPane.showMessageDialog(this, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     private void deleteUser() {
-        String meterNumber = searchField.getText();
-        users.removeIf(user -> user.meterNumber.equals(meterNumber));
-        saveUsers();
-        JOptionPane.showMessageDialog(this, "User deleted successfully!");
+        String meterNumber = searchField.getText().trim();
+        
+        if (meterNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter meter number!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        boolean removed = users.removeIf(user -> user.meterNumber.equals(meterNumber));
+    
+        if (removed) {
+            saveUsers();
+            JOptionPane.showMessageDialog(this, "User deleted successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void saveUsers() {
