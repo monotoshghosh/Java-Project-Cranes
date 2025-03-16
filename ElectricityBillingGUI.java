@@ -35,7 +35,7 @@ class SplashScreen extends JFrame {
         label.setFont(new Font("Serif", Font.BOLD, 22));
         panel.add(label, BorderLayout.CENTER);
         
-        JLabel credit = new JLabel("-By Monotosh Ghosh", SwingConstants.CENTER);
+        JLabel credit = new JLabel("- By Monotosh Ghosh", SwingConstants.CENTER);
         credit.setForeground(Color.WHITE);
         credit.setFont(new Font("Serif", Font.ITALIC, 16));
         panel.add(credit, BorderLayout.SOUTH);
